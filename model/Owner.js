@@ -31,7 +31,7 @@ const ownerSchema=mongoose.Schema(
             type:'string',
             default:'default.jpg'
         },
-        adresss:{
+        address:{
             type:'string',
 
         }
