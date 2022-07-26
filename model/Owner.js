@@ -1,6 +1,8 @@
 const mongoose=require('mongoose');
 const valid=require('validator');
-const ownerSchema=mongoose.Schema(
+const crypto=require('crypto');
+const bcrypt=require('bcryptjs');
+const ownerSchema=new mongoose.Schema(
     {
         firstName:{
             type:String,
@@ -34,8 +36,16 @@ const ownerSchema=mongoose.Schema(
         address:{
             type:'string',
 
-        }
+        },
+        passwordChangedAt:Date,
+
     }
-)
-const Owner=mongoose.model('Owner',ownerSchema);
-module.exports=Owner;
+);
+ownerSchema.pre("save",async function(next){
+    if(!this.isModified("password")) return next();
+    this.password=await bcrypt.hash(this.password,12);
+    next();
+});
+
+
+module.exports=mongoose.models.Owner|| mongoose.model('Owner',ownerSchema);

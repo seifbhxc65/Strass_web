@@ -1,8 +1,10 @@
+
 const Owner = require("../model/owner");
 const appError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
 exports.registerOwner = catchAsync(async (req, res, next) => {
+ console.log(req.body);
   const { firstName, lastName, password, photo, email, address } = req.body;
   const owner = await Owner.create({
     firstName,
@@ -20,3 +22,6 @@ exports.registerOwner = catchAsync(async (req, res, next) => {
     }
   })
 });
+exports.login=catchAsync(async (req,res,next)=>{
+    
+})
