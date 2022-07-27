@@ -18,6 +18,7 @@ exports.registerOwner = catchAsync(async (req, res, next) => {
   if(!owner) return next(new appError('an error happened during creation of the new owner',400));
   createToken(res,owner,201);
 });
+
 exports.loginOwner=catchAsync(async (req,res,next)=>{
     const  {email,password}=req.body;
     
@@ -27,3 +28,24 @@ exports.loginOwner=catchAsync(async (req,res,next)=>{
     if(!owner || !(await owner.correctPassword(password,owner.password))) return next(new appError('incorrect password or email',401));
     createToken(res,owner,201);
 });
+exports.protectRoute= Model=>catchAsync( async(req,res,next)=>{
+    let token;
+    if(req.headers.authorization?.startsWith('Bearer')){
+            token=req.headers.authorization.split(' ')[1];
+    }
+    else if(req.cookies.jwt) token=req.cookies.jwt;
+    if(!token){
+        return next(new appError('u are logged out , please log in to get acess',401));
+    }
+    
+    const decoded=await jwt.verify(token,process.env.JWT_SECRET);
+
+    const user=await Model.findById(decoded.id);
+    if(!user) return next(new appError("this user no longer exist",404));
+    if(user.passwordChangedAfter(decoded.iat))
+    {return next(new appError('password was changed after the token release',401));}
+    req.user=user;
+    next();
+
+   
+})
