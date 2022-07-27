@@ -48,4 +48,11 @@ exports.protectRoute= Model=>catchAsync( async(req,res,next)=>{
     next();
 
    
-})
+});
+exports.restrictTo=(...roles)=>(req,res,next)=>{
+    if(!roles.includes(req.user.role)){
+        return next(new appError('you are not allowed to access this route',403))
+    }
+    next();
+}
+
