@@ -56,3 +56,12 @@ exports.restrictTo=(...roles)=>(req,res,next)=>{
     next();
 }
 
+exports.logout=(req,res,next)=>{
+    res.cookie('jwt','logout',{
+expires: new Date( Date.now())
+})
+res.status(200).json({
+    status:'success',
+    message:'logged out succesfully'
+})
+};
