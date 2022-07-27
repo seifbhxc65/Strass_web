@@ -46,6 +46,13 @@ ownerSchema.pre("save",async function(next){
     this.password=await bcrypt.hash(this.password,12);
     next();
 });
-
+ownerSchema.methods.correctPassword=async (enteredPassword,userPassword) => 
+                                                      await bcrypt.compare(enteredPassword,userPassword);
+ownerSchema.methods.passwordChangedAfter=(jwtTimestamp)=>{
+    if(this.passwordChangedAt){
+        if(this.passwordChangedAt>jwtTimestamp*1000){return true;}
+        return false;
+    }
+}
 
 module.exports=mongoose.models.Owner|| mongoose.model('Owner',ownerSchema);

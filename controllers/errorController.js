@@ -7,8 +7,9 @@ const sendErrorDev=(err,req,res)=>{
       error:err
     })
   }
-module.exports=(err,req,res,next)=>{
+module.exports=(err,req,res,next)=>{  
 if(process.env.NODE_ENV==="development"){
+
     err.statusCode=err.statusCode||500;
     err.status=err.status||"error"
     sendErrorDev(err,req,res)
