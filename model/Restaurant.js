@@ -78,6 +78,7 @@ slug:{
   toJSON: { virtuals: true },
   toObject: { virtuals: true },
 });
+restaurantSchema.index({ slug: 1 });
 restaurentSchema.pre('save',(next)=>{
     this.slug=slug(this.name,{
         lower:true
