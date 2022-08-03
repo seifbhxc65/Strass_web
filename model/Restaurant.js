@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const valid = require("validator");
 const slug=require("slug");
-const restaurentSchema = new mongoose.Schema({
+const restaurantSchema = new mongoose.Schema({
   //name,location,adress,about,averageRating,numberOfRatings,logo,photos,phoneNumber,openingTime,closingTime
   //additionals: reviews,menu,delivery(boolean),owner
   name: {
@@ -30,7 +30,7 @@ slug:{
         type:[Number],
         required:true,
     },
-    index: '2dsphere'
+   // index: '2dsphere'
   },
   address: {
     type:String,
@@ -79,12 +79,13 @@ slug:{
   toObject: { virtuals: true },
 });
 restaurantSchema.index({ slug: 1 });
-restaurentSchema.pre('save',(next)=>{
+restaurantSchema.pre('save',function(next){
+
     this.slug=slug(this.name,{
         lower:true
     });
     next();
 })
 
-const Restaurant=mongoose.model('Restaurant',restaurentSchema);
+const Restaurant=mongoose.model('Restaurant',restaurantSchema);
 module.exports=Restaurant;
