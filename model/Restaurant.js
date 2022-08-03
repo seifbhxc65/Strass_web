@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const valid = require("validator");
+const slug=require("slug");
 const restaurentSchema = new mongoose.Schema({
   //name,location,adress,about,averageRating,numberOfRatings,logo,photos,phoneNumber,openingTime,closingTime
   //additionals: reviews,menu,delivery(boolean),owner
@@ -77,5 +78,12 @@ slug:{
   toJSON: { virtuals: true },
   toObject: { virtuals: true },
 });
+restaurentSchema.pre('save',(next)=>{
+    this.slug=slug(this.name,{
+        lower:true
+    });
+    next();
+})
+
 const Restaurant=mongoose.model('Restaurant',restaurentSchema);
 module.exports=Restaurant;
