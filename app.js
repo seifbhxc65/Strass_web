@@ -2,6 +2,7 @@ const express=require('express');
 const app=express();
 const ownerRouter=require('./routes/ownerRouter');
 const restaurantRouter=require('./routes/restoRouter');
+const  menuRouter=require('./routes/menuRouter')
 const appError = require('./utils/appError');
 const cookieParser = require('cookie-parser')
 const errCtr=require(`${__dirname}/controllers/errorController`)
@@ -15,6 +16,7 @@ app.use(express.json({
 app.use(cookieParser())
 app.use('/api/v1/owner',ownerRouter);
 app.use('/api/v1/restaurant',restaurantRouter);
+app.use('/api/v1/menu',menuRouter);
 app.use('*',(req,res,next)=>{
     return next(new appError('this route is not defined',404))
 })

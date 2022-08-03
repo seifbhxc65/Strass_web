@@ -1,0 +1,9 @@
+const Menu=require("../model/Menu");
+const appError = require("../utils/appError");
+const catchAsync = require("../utils/catchAsync");
+const {createOne,getAll,getOne,deleteOne,updateOne}=require('./crudController');
+exports.createMenu=createOne(Menu);
+exports.getOneMenu=getOne(Menu);
+exports.getAllMenus=getAll(Menu);
+exports.updateMenu=updateOne(Menu);
+exports.deleteMenu=deleteOne(Menu);
