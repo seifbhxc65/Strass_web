@@ -1,7 +1,7 @@
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
 exports.getAll=Model=>catchAsync(async (req,res,next)=>{
-    const documents=await Model.findAll();
+    const documents=await Model.find();
     res.status(200).json({
         size:documents.length,
         status:'sucess',
@@ -24,10 +24,9 @@ exports.createOne=Model=>catchAsync(
     }
 )
 exports.updateOne=Model=> catchAsync(async(req,res,next)=>{
-  const updateddocument=await Model.update(req.body,{
-    where:{
-      id:req.params.id/**** */
-    }
+  const updateddocument=await Model.findByIdAndUpdate(req.params.id,req.body,{
+    new:true,
+    runValidators:true,
   });
   if(!updateddocument) return next(new AppError('we cant find the required document to be updated',404));
   res.status(202).json({
@@ -38,16 +37,14 @@ exports.updateOne=Model=> catchAsync(async(req,res,next)=>{
   })
  });
  exports.deleteOne=Model=>catchAsync(async (req,res,next)=>{
-  const deletedDoc=await Model.destroy({
-    where:{id:req.params.id}
-  });
+  const deletedDoc=await Model.findByIdAndDelete(req.params.id);
   if(!deletedDoc) return next(new AppError('we cant find the required document to be deleted',404));
   res.status(204).json({
     status:'deleted successfully'
   })
  })
  exports.getOne=Model=> catchAsync(async (req,res,next)=>{
-  const doc=await Model.findByPk(req.params.id);
+  const doc=await Model.findById(req.params.id);
   if(!doc) return next(new AppError("we cant find the required doc",404));
   res.status(200).json({
     stauts:'sucess',
