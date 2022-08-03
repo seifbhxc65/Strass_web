@@ -7,4 +7,3 @@ exports.getOneRestaurant=getOne(Restaurant);
 exports.getAllRestaurants=getAll(Restaurant);
 exports.updateRestaurant=updateOne(Restaurant);
 exports.deleteRestaurant=deleteOne(Restaurant);
-exports.create
