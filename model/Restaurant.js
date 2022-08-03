@@ -6,7 +6,7 @@ const restaurentSchema = new mongoose.Schema({
   //additionals: reviews,menu,delivery(boolean),owner
   name: {
     type:String,
-    required:[truen,'a restaurant must have a name ! '],
+    required:[true,'a restaurant must have a name ! '],
     trim:true,
     maxlength: [40, 'a tour name must never exceed 40 caractere '],
     minlength: [3, 'a tour name must never be less   2 caractere '],
