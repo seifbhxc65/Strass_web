@@ -6,7 +6,6 @@ const menuSchema = mongoose.Schema({
   type:{
        type:String,
        required:[true,'the menu must have a type (dinner,breakfast,drinks,italien,french,etc ...)'],
-
   },
   coverPhoto:{
     type:String,
@@ -16,7 +15,16 @@ const menuSchema = mongoose.Schema({
     type:String,
     trim:true
   },
-  //meals,
+  meals:{
+    type:mongoose.Schema.ObjectId,
+    ref:'Meal'
+  },
 });
+menuSchema.pre(/^find/,function(next) {
+this.populate({
+  path:'meals'
+});
+next();
+})
 const Menu=mongoose.model('Menu',menuSchema);
 module.exports=Menu;

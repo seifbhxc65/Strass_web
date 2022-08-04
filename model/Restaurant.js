@@ -16,6 +16,11 @@ owner:{
     ref:'Owner',
     required:[true,'a restaurant must have an owner']
 },
+
+menu:[{
+  type:mongoose.Schema.ObjectId,
+  ref:'Menu',
+}],
 slug:{
     type:String
 },
@@ -85,6 +90,12 @@ restaurantSchema.pre('save',function(next){
         lower:true
     });
     next();
+});
+restaurantSchema.pre(/^find/,function (next){
+this.populate({
+  path:'menu',
+})
+next();
 })
 
 const Restaurant=mongoose.model('Restaurant',restaurantSchema);
