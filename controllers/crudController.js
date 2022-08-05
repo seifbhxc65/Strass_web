@@ -1,7 +1,8 @@
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
-exports.getAll=Model=>catchAsync(async (req,res,next)=>{
-    const documents=await Model.find();
+exports.getAll=(Model,options={})=>catchAsync(async (req,res,next)=>{
+  
+    const documents=await Model.find(options);
     res.status(200).json({
         size:documents.length,
         status:'sucess',
@@ -17,9 +18,15 @@ exports.createOne=Model=>catchAsync(
         res.status(201)
            .json({
                status:'sucess',
-               data:{
-                document
-               }
+               data:{  
+                
+                            
+                         
+                    document  
+                          
+
+                        
+                     }
            })
 
     }
