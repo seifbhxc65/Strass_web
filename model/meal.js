@@ -12,6 +12,10 @@ const mealSchema = mongoose.Schema({
     type:String,
     default:'cover.jpg'
   },
+  menuId:{
+    type:mongoose.Schema.ObjectId,
+    ref:'Menu'
+   },
  price:{
   type:Number,
   required:[true,'the meal should be priced'],

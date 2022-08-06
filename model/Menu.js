@@ -15,10 +15,10 @@ const menuSchema = mongoose.Schema({
     type:String,
     trim:true
   },
-  meals:{
+  meals:[{
     type:mongoose.Schema.ObjectId,
     ref:'Meal'
-  },
+  }],
 });
 menuSchema.pre(/^find/,function(next) {
 this.populate({

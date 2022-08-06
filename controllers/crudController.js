@@ -1,8 +1,8 @@
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
 exports.getAll=(Model,options={})=>catchAsync(async (req,res,next)=>{
-  
-    const documents=await Model.find(options);
+  console.log(req.params)
+    const documents=await Model.find(req.params);
     res.status(200).json({
         size:documents.length,
         status:'sucess',
@@ -12,8 +12,9 @@ exports.getAll=(Model,options={})=>catchAsync(async (req,res,next)=>{
     })
 });
 exports.createOne=Model=>catchAsync(
+
     async (req,res,next)=>{
-        
+        req.body={...req.body,...req.params};
         const document =await Model.create(req.body);
         res.status(201)
            .json({
