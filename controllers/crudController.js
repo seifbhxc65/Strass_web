@@ -49,7 +49,7 @@ exports.updateOne=Model=> catchAsync(async(req,res,next)=>{
  exports.deleteOne=Model=>catchAsync(async (req,res,next)=>{
   
   const options={};
-  options.id=req.params.id;
+  options._id=req.params.id;
   options[Object.keys(req.params)[0]]=Object.values(req.params)[0];
   const deletedDoc=await Model.findOneAndDelete(options);
   if(!deletedDoc) return next(new AppError('we cant find the required document to be deleted',404));
