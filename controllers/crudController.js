@@ -1,6 +1,12 @@
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
 const { json } = require("body-parser");
+const getParamsOptions=params=>{
+  const options={};
+  options._id=params.id;
+  options[Object.keys(params)[0]]=Object.values(params)[0];
+  return options;
+}
 exports.getAll=(Model,options={})=>catchAsync(async (req,res,next)=>{
   console.log(req.params)
     const documents=await Model.find(req.params);
@@ -34,7 +40,8 @@ exports.createOne=Model=>catchAsync(
     }
 )
 exports.updateOne=Model=> catchAsync(async(req,res,next)=>{
-  const updateddocument=await Model.findByIdAndUpdate(req.params.id,req.body,{
+  const options=getParamsOptions(req.params);
+  const updateddocument=await Model.findOneAndUpdate(options,req.body,{
     new:true,
     runValidators:true,
   });
@@ -48,9 +55,7 @@ exports.updateOne=Model=> catchAsync(async(req,res,next)=>{
  });
  exports.deleteOne=Model=>catchAsync(async (req,res,next)=>{
   
-  const options={};
-  options._id=req.params.id;
-  options[Object.keys(req.params)[0]]=Object.values(req.params)[0];
+  const options=getParamsOptions(req.params);
   const deletedDoc=await Model.findOneAndDelete(options);
   if(!deletedDoc) return next(new AppError('we cant find the required document to be deleted',404));
   res.status(204).json({
