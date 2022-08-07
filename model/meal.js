@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const valid = require("validator");
+const Menu=require('./Menu');
 //its going to be nested inside the restau model
 const mealSchema = mongoose.Schema({
   // type,coverPhoto,description,meals
@@ -27,5 +28,10 @@ const mealSchema = mongoose.Schema({
   },
   //meals,
 });
+mealSchema.post('save',async (doc)=>{
+ const targetedMenu= await Menu.findOne({_id:doc.menuId});
+ targetedMenu.meals.push(doc)
+ await targetedMenu.save();
+})
 const Meal=mongoose.model('Meal',mealSchema);
 module.exports=Meal;
