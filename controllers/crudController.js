@@ -1,13 +1,12 @@
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
-const { json } = require("body-parser");
 const getParamsOptions=params=>{
   const options={};
   options._id=params.id;
   options[Object.keys(params)[0]]=Object.values(params)[0];
   return options;
 }
-exports.getAll=(Model,options={})=>catchAsync(async (req,res,next)=>{
+exports.getAll=(Model)=>catchAsync(async (req,res,next)=>{
   console.log(req.params)
     const documents=await Model.find(req.params);
     res.status(200).json({
