@@ -32,6 +32,6 @@ mealSchema.post('save',async (doc)=>{
  const targetedMenu= await Menu.findOne({_id:doc.menuId});
  targetedMenu.meals.push(doc)
  await targetedMenu.save();
-})
+});
 const Meal=mongoose.model('Meal',mealSchema);
 module.exports=Meal;

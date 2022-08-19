@@ -91,6 +91,7 @@ restaurantSchema.pre('save',function(next){
     });
     next();
 });
+
 restaurantSchema.pre(/^find/,function (next){
 this.populate({
   path:'menu',
