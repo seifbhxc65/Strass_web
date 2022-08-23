@@ -2,6 +2,6 @@
 [+]add field existance verif on restaurntId,menuId
 [+] make inserting the rest/menu id in the body dynamic depends on the request 
 bugs to fix:
-users can add menus meals to a non-existant restaurnt
-users can add  meals to a non-existant menus
-users can add meals to menus that does not correspond to the triggered restaurnt in the request
+1/users can add menus meals to a non-existant restaurnt
+2/users can add  meals to a non-existant menus
+3/users can add meals to menus that does not correspond to the triggered restaurnt in the request
