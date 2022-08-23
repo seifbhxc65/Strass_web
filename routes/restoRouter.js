@@ -1,8 +1,12 @@
 const express=require('express');
-const router=express.Router();
+const router=express.Router({mergeParams:true});
 const menuRouter=require('./menuRouter');
-const {getAllRestaurants,getOneRestaurant, updateRestaurant, deleteRestaurant, createRestaurant}=require('../controllers/restoController')
+const {getAllRestaurants,getOneRestaurant, updateRestaurant, deleteRestaurant, createRestaurant}=require('../controllers/restoController');
+const Restaurant = require('../model/Restaurant');
+const verifFieldExist = require('../middleware/verifFieldExist');
+router.use('/:restaurantId/menu',verifFieldExist(Restaurant,"restaurantId"));
 router.use('/:restaurantId/menu',menuRouter);
+
 router.route('/')
 .get(getAllRestaurants)
 .post(createRestaurant)

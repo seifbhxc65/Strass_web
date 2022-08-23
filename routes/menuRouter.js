@@ -4,6 +4,8 @@ const mealRouter=require('./mealRouter');
 const {getAllMenus,getOneMenu, updateMenu, deleteMenu, createMenu}=require('../controllers/menuController');
 const verifFieldExist = require('../middleware/verifFieldExist');
 const Restaurant = require('../model/Restaurant');
+const Menu = require('../model/Menu');
+router.use('/:menuId/meal',verifFieldExist(Menu,"menuId"));
 router.use('/:menuId/meal',mealRouter);
 router.route('/')
 .get(getAllMenus)

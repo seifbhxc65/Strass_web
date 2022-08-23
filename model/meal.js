@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const valid = require("validator");
+const appError = require("../utils/appError");
 const Menu=require('./Menu');
 //its going to be nested inside the restau model
 const mealSchema = mongoose.Schema({
@@ -28,8 +29,9 @@ const mealSchema = mongoose.Schema({
   },
   //meals,
 });
-mealSchema.post('save',async (doc)=>{
+mealSchema.post('save',async (doc,next)=>{
  const targetedMenu= await Menu.findOne({_id:doc.menuId});
+ if(!targetedMenu) return next (new appError('cant find the targeted menu',404))
  targetedMenu.meals.push(doc)
  await targetedMenu.save();
 });
