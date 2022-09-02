@@ -4,5 +4,9 @@
 bugs to fix:
 1/users can add menus meals to a non-existant restaurnt:done
 2/users can add  meals to a non-existant menus:done
+<<<<<<< HEAD
 3/users can add meals to menus that does not correspond to the triggered restaurnt in the request:done
 4/
+=======
+3/users can add meals to menus that does not correspond to the triggered restaurnt in the request
+>>>>>>> 4fc15349898b481cf4406716af393dec4a38de76
