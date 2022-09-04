@@ -16,17 +16,14 @@ module.exports=(Model,field)=>catchAsync(async (req,res,next)=>{
     }
 //
 const lastId= req.url.split('/')[1];
-const initialQuery=await Model.findOne({
+const requiredDocument= await Model.findOne({
     _id:fieldValue,
-    ///"menu.type":"turkish menu"
-    // menu:{
-    //     $elemMatch:{id:"631412e676ba18cfc5d1e17f"}
-    // },
-   // ...req.params //menuId is included but it won't affect the query
+    ...req.params //menuId is included but it won't affect the query
 });
-// .elemMatch('menu',{id:mongoose.Types.ObjectId("631412e676ba18cfc5d1e17f")})
-const requiredDocument=await initialQuery.elemMatch('menu',{type:"turkish menu"});
-//console.log(requiredDocument);
-if(!requiredDocument) return next(new appError(`the provided ${field} does not correspond to any document`))
+
+
+const nestedElementIdsToVerify=requiredDocument?.menu.map(el=>el._id.toString());
+
+if(lastId&&nestedElementIdsToVerify.indexOf(lastId)==-1) return next(new appError(`the provided ${field} does not correspond to any document`))
 next();
 })
