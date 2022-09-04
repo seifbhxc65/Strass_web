@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const appError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
@@ -14,11 +15,18 @@ module.exports=(Model,field)=>catchAsync(async (req,res,next)=>{
         return next(new appError(`you need to provide the value of ${field}`,400));
     }
 //
-const requiredDocument=await Model.findOne({
+const lastId= req.url.split('/')[1];
+const initialQuery=await Model.findOne({
     _id:fieldValue,
-    ...req.params //menuId is included but it won't affect the query
+    ///"menu.type":"turkish menu"
+    // menu:{
+    //     $elemMatch:{id:"631412e676ba18cfc5d1e17f"}
+    // },
+   // ...req.params //menuId is included but it won't affect the query
 });
-console.log(req.params);
+// .elemMatch('menu',{id:mongoose.Types.ObjectId("631412e676ba18cfc5d1e17f")})
+const requiredDocument=await initialQuery.elemMatch('menu',{type:"turkish menu"});
+console.log(requiredDocument);
 if(!requiredDocument) return next(new appError(`the provided ${field} does not correspond to any document`))
 next();
 })
