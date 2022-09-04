@@ -26,7 +26,7 @@ const initialQuery=await Model.findOne({
 });
 // .elemMatch('menu',{id:mongoose.Types.ObjectId("631412e676ba18cfc5d1e17f")})
 const requiredDocument=await initialQuery.elemMatch('menu',{type:"turkish menu"});
-console.log(requiredDocument);
+//console.log(requiredDocument);
 if(!requiredDocument) return next(new appError(`the provided ${field} does not correspond to any document`))
 next();
 })
