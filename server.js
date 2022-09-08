@@ -6,15 +6,6 @@ let x;
 
 const dbConnet = require(`${__dirname}/startup/db`);
 const Owner = require("./model/Owner");
-// (async function () {
-//   await Owner.create({
-//     firstName: "seif",
-//     lastName: "belhaj",
-//     password: "12345678",
-//     email: "saif40340@gmail.com",
-//   });
-//   console.log('user created sucessfully');
-// })();
 const port = process.env.PORT;
 
 dbConnet(process.env.DATABASE);
